@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiControllers\GetController;
 use App\Http\Controllers\ApiControllers\SetController;
 use App\Http\Controllers\ApiControllers\DeleteController;
 use App\Http\Controllers\ApiControllers\UpdateController;
+use App\Http\Controllers\ApiControllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,6 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware' => 'auth:sanctum'], function(){
+
+
 Route::get('ListProducts/{id?}',[GetController::class,'ListProducts'] );
 Route::get('GetProductByName/{name?}',[GetController::class,'GetProductByName'] );
 
@@ -33,3 +37,8 @@ Route::delete('deleteProduct/{id}',[DeleteController::class,'DeleteProduct']);
 
 Route::put('updateCategory',[UpdateController::class,'updateCategory']);
 Route::put('updateProduct',[UpdateController::class,'updateProduct']);
+
+});
+
+
+Route::post('login',[AuthController::class,'login']);
